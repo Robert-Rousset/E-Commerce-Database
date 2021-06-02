@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
   } catch (error) {
     res.status(500).json(error)
   }
-
 });
 
 router.get('/:id', async (req, res) => {
@@ -22,7 +21,6 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json(error, "No Product found with that ID")
   }
-
 });
 
 // create new product
