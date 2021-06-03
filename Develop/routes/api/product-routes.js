@@ -17,6 +17,9 @@ router.get('/:id', async (req, res) => {
     const productById = await Product.findByPk(req.params.id, {
       include: [{ model: Category}, {model: Tag}],
     });
+    if(!productById){
+      res.json({message: "No product found with that ID"})
+    }
     res.json(productById)
   } catch (error) {
     res.status(500).json(error, "No Product found with that ID")
@@ -48,7 +51,7 @@ router.post('/', (req, res) => {
       // if no product tags, just respond
       res.status(200).json(product);
     })
-    .then((productTagIds) => res.status(200).json(productTagIds))
+    .then(() => res.status(200).json("Product has been added"))
     .catch((err) => {
       console.log(err);
       res.status(400).json(err);
@@ -93,7 +96,7 @@ router.put('/:id', (req, res) => {
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
       // console.log(err);
-      res.status(400).json(err);
+      res.status(200).json(err);
     });
 });
 
@@ -108,7 +111,7 @@ router.delete('/:id', async (req, res) => {
       res.status(404).json({ message: "No Product found with that ID"});
       return
     }
-    res.status(200).json(deletedProduct);
+    res.status(200).json({message: "Product has been deleted"});
   } catch (error) {
     res.status(500).json(error)
   }
